@@ -1,0 +1,63 @@
+
+body{
+	background-color: pink;
+}
+
+.top{
+	height:15%;
+	border: 1px solid  red;
+	/*顶部距离=实际内容距离+边框距离*/
+	box-sizing: border-box;
+}
+
+.left{
+	width:15%;
+	height:85%;
+	border:1px solid green;
+	float: left;
+	box-sizing: border-box;
+}
+
+.center{
+	width: 85%;
+	height: 85%;
+	border: 1px solid blue;
+	float: left;
+	box-sizing: border-box;
+}
+.left ul{
+	/**列表显示风格 默认（去掉点）*/
+	list-style-type: none;
+}
+.left ul li  a{
+	text-decoration: none;
+}
+
+
+.add-customer{
+	margin-top: 30px;
+	margin-left:100px;
+	width:200px;
+	height:50px;
+}
+
+
+
+.customer-table{
+	margin-left: 100px;
+	border:1px red solid;
+	border-collapse: collapse;
+}
+
+.customer-table-header{
+	background-color: lightskyblue;
+}
+
+.customer-table-content{
+	background-color: dodgerblue;
+}
+
+.customer-table-content:hover{
+	background-color: coral;
+}
+

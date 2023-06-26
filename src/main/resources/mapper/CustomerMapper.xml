@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oa.project.dao.hb.CustomerMapper">
+  <resultMap id="BaseResultMap" type="com.oa.project.entity.hb.Customer">
+    <id column="cus_id" jdbcType="INTEGER" property="cusId" />
+    <result column="cus_name" jdbcType="VARCHAR" property="cusName" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="tel" jdbcType="VARCHAR" property="tel" />
+    <result column="team_id" jdbcType="INTEGER" property="teamId" />
+    <association property="custype" column="cus_type_id" javaType="com.oa.project.entity.hb.Custype"
+                 select="com.oa.project.dao.hb.CustypeMapper.selectByPrimaryKey" fetchType="lazy"></association>
+    <association property="custag" column="tag_id" javaType="com.oa.project.entity.hb.Custag"
+                 select="com.oa.project.dao.hb.CustagMapper.selectByPrimaryKey" fetchType="lazy"></association>
+    <association property="cusstate" column="state_id" javaType="com.oa.project.entity.hb.Cusstate"
+                 select="com.oa.project.dao.hb.CusstateMapper.selectByPrimaryKey" fetchType="lazy"></association>
+    <association property="emp" column="emp_id" javaType="com.oa.project.entity.lh.Emp"
+                 select="com.oa.project.dao.lh.EmpDao.findById" fetchType="lazy"></association>
+  </resultMap>
+  <resultMap id="BaseResultMap2" type="com.oa.project.entity.hb.Customer">
+    <id column="cus_id" jdbcType="INTEGER" property="cusId" />
+    <result column="cus_name" jdbcType="VARCHAR" property="cusName" />
+    
+    <result column="tel" jdbcType="VARCHAR" property="tel" />
+    <result column="team_id" jdbcType="INTEGER" property="teamId" />
+    <result column="cus_age" jdbcType="INTEGER" property="cusAge" />
+    <result column="cus_location" jdbcType="VARCHAR" property="cusLocation" />
+    <result column="cus_company" jdbcType="VARCHAR" property="cusCompany" />
+    <result column="cus_position" jdbcType="VARCHAR" property="cusPosition" />
+    <association property="custype" column="cus_type_id" javaType="com.oa.project.entity.hb.Custype"
+                 select="com.oa.project.dao.hb.CustypeMapper.selectByPrimaryKey"></association>
+    <association property="custag" column="tag_id" javaType="com.oa.project.entity.hb.Custag"
+                 select="com.oa.project.dao.hb.CustagMapper.selectByPrimaryKey"></association>
+    <association property="cusstate" column="state_id" javaType="com.oa.project.entity.hb.Cusstate"
+                 select="com.oa.project.dao.hb.CusstateMapper.selectByPrimaryKey"></association>
+    <association property="emp" column="emp_id" javaType="com.oa.project.entity.lh.Emp"
+                 select="com.oa.project.dao.lh.EmpDao.findById"></association>
+  </resultMap>
+  <sql id="Base_Column_List">
+    cus_id, cus_name, cus_type_id, tag_id, state_id, tel,emp_id,team_id,cus_age,cus_location,cus_company,cus_position
+  </sql>
+  <insert id="insertSelective" parameterType="com.oa.project.entity.hb.Customer">
+    insert into customer
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="cusId != null">
+        cus_id,
+      </if>
+      <if test="cusName != null">
+        cus_name,
+      </if>
+      <if test="custype != null and custype.cusTypeId != null">
+        cus_type_id,
+      </if>
+      <if test="custag != null and custag.tagId != null">
+        tag_id,
+      </if>
+      <if test="cusstate != null and cusstate.stateId != null">
+        state_id,
+      </if>
+      <if test="tel != null">
+        tel,
+      </if>
+      <if test="emp != null and emp.empId != null">
+        emp_id,
+      </if>
+      <if test="teamId != null">
+        team_id,
+      </if>
+      <if test="cusAge != null">
+        cus_age,
+      </if>
+      <if test="cusLocation != null">
+        cus_location,
+      </if>
+      <if test="cusCompany != null">
+        cus_company,
+      </if>
+      <if test="cusPosition != null">
+        cus_position,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="cusId != null">
+        #{cusId,jdbcType=INTEGER},
+      </if>
+      <if test="cusName != null">
+        #{cusName,jdbcType=VARCHAR},
+      </if>
+      <if test="custype != null and custype.cusTypeId != null">
+        #{custype.cusTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="custag != null and custag.tagId != null">
+        #{custag.tagId,jdbcType=INTEGER},
+      </if>
+      <if test="cusstate != null and cusstate.stateId != null">
+        #{cusstate.stateId,jdbcType=INTEGER},
+      </if>
+      <if test="tel != null">
+        #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="emp != null and emp.empId != null">
+        #{emp.empId,jdbcType=INTEGER},
+      </if>
+      <if test="teamId != null">
+        #{teamId,jdbcType=INTEGER},
+      </if>
+      <if test="cusAge != null">
+        #{cusAge,jdbcType=INTEGER},
+      </if>
+      <if test="cusLocation != null">
+        #{cusLocation,jdbcType=VARCHAR},
+      </if>
+      <if test="cusCompany != null">
+        #{cusCompany,jdbcType=VARCHAR},
+      </if>
+      <if test="cusPosition != null">
+        #{cusPosition,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.oa.project.entity.hb.Customer">
+    update customer
+    <set>
+      <if test="cusName != null">
+        cus_name = #{cusName,jdbcType=VARCHAR},
+      </if>
+      <if test="custype != null and custype.cusTypeId != null">
+        cus_type_id = #{custype.cusTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="custag != null and custag.tagId != null">
+        tag_id = #{custag.tagId,jdbcType=INTEGER},
+      </if>
+      <if test="cusstate != null and cusstate.stateId != null">
+        state_id = #{cusstate.stateId,jdbcType=INTEGER},
+      </if>
+      <if test="tel != null">
+        tel = #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="emp != null and emp.empId != null">
+        emp_id = #{emp.empId,jdbcType=INTEGER},
+      </if>
+      <if test="teamId != null">
+        team_id = #{teamId,jdbcType=INTEGER},
+      </if>
+      <if test="cusAge != null">
+        cus_age = #{cusAge,jdbcType=INTEGER},
+      </if>
+      <if test="cusLocation != null">
+        cus_location = #{cusLocation,jdbcType=VARCHAR},
+      </if>
+      <if test="cusCompany != null">
+        cus_company = #{cusCompany,jdbcType=VARCHAR},
+      </if>
+      <if test="cusPosition != null">
+        cus_position = #{cusPosition,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where cus_id = #{cusId,jdbcType=INTEGER}
+  </update>
+</mapper>

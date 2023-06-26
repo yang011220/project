@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oa.project.dao.hb.ContractMapper">
+  <resultMap id="BaseResultMap" type="com.oa.project.entity.hb.Contract">
+    <id column="contract_id" jdbcType="INTEGER" property="contractId" />
+    <result column="pic_path" jdbcType="VARCHAR" property="picPath" />
+    <result column="contract_name" jdbcType="VARCHAR" property="contractName" />
+    <result column="money" jdbcType="REAL" property="money" />
+    <result column="contract_time" jdbcType="TIMESTAMP" property="contractTime" />
+    <result column="contract_place" jdbcType="VARCHAR" property="contractPlace" />
+    <association property="emp" column="emp_id" javaType="com.oa.project.entity.lh.Emp"
+                 select="com.oa.project.dao.lh.EmpDao.findById" fetchType="lazy"></association>
+    <association property="customer" column="cus_id" javaType="com.oa.project.entity.hb.Customer"
+                 select="com.oa.project.dao.hb.CustomerMapper.selectByPrimaryKey" fetchType="lazy"></association>
+    <association property="team" column="team_id" javaType="com.oa.project.entity.team.Team"
+                 select="com.oa.project.dao.team.TeamMapper.selectByPrimaryKey" fetchType="lazy"></association>
+  </resultMap>
+  <sql id="Base_Column_List">
+    contract_id, pic_path, emp_id, cus_id, contract_name, money, contract_time, contract_place,team_id
+  </sql>
+  <insert id="insertSelective" parameterType="com.oa.project.entity.hb.Contract">
+    insert into contract
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="contractId != null">
+        contract_id,
+      </if>
+      <if test="picPath != null">
+        pic_path,
+      </if>
+      <if test="emp !=null and emp.empId != null">
+        emp_id,
+      </if>
+      <if test="customer != null and customer.cusId != null">
+        cus_id,
+      </if>
+      <if test="contractName != null">
+        contract_name,
+      </if>
+      <if test="money != null">
+        money,
+      </if>
+      <if test="contractTime != null">
+        contract_time,
+      </if>
+      <if test="contractPlace != null">
+        contract_place,
+      </if>
+      <if test="team !=null and team.teamId != null">
+        team_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="contractId != null">
+        #{contractId,jdbcType=INTEGER},
+      </if>
+      <if test="picPath != null">
+        #{picPath,jdbcType=VARCHAR},
+      </if>
+      <if test="emp !=null and emp.empId != null">
+        #{emp.empId,jdbcType=INTEGER},
+      </if>
+      <if test="customer != null and customer.cusId != null">
+        #{customer.cusId,jdbcType=INTEGER},
+      </if>
+      <if test="contractName != null">
+        #{contractName,jdbcType=VARCHAR},
+      </if>
+      <if test="money != null">
+        #{money,jdbcType=REAL},
+      </if>
+      <if test="contractTime != null">
+        #{contractTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="contractPlace != null">
+        #{contractPlace,jdbcType=VARCHAR},
+      </if>
+      <if test="team !=null and team.teamId != null">
+        #{team.teamId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.oa.project.entity.hb.Contract">
+    update contract
+    <set>
+      <if test="picPath != null">
+        pic_path = #{picPath,jdbcType=VARCHAR},
+      </if>
+      <if test="emp != null and emp.empId != null">
+        emp_id = #{emp.empId,jdbcType=INTEGER},
+      </if>
+      <if test="customer != null and customer.cusId != null">
+        cus_id = #{customer.cusId,jdbcType=INTEGER},
+      </if>
+      <if test="contractName != null">
+        contract_name = #{contractName,jdbcType=VARCHAR},
+      </if>
+      <if test="money != null">
+        money = #{money,jdbcType=REAL},
+      </if>
+      <if test="contractTime != null">
+        contract_time = #{contractTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="contractPlace != null">
+        contract_place = #{contractPlace,jdbcType=VARCHAR},
+      </if>
+      <if test="team !=null and team.teamId != null">
+        team_id = #{team.teamId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where contract_id = #{contractId,jdbcType=INTEGER}
+  </update>
+</mapper>

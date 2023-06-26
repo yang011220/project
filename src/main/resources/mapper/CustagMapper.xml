@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oa.project.dao.hb.CustagMapper">
+  <resultMap id="BaseResultMap" type="com.oa.project.entity.hb.Custag">
+    <id column="tag_id" jdbcType="INTEGER" property="tagId" />
+    <result column="tag_name" jdbcType="VARCHAR" property="tagName" />
+    <association property="tagtype" column="tagtype_id" javaType="com.oa.project.entity.hb.Tagtype"
+                 select="com.oa.project.dao.hb.TagtypeMapper.selectByPrimaryKey" fetchType="lazy"></association>
+  </resultMap>
+  <resultMap id="BaseResultMap2" type="com.oa.project.entity.hb.Custag">
+    <id column="tag_id" jdbcType="INTEGER" property="tagId" />
+    <result column="tag_name" jdbcType="VARCHAR" property="tagName" />
+    <association property="tagtype" column="tagtype_id" javaType="com.oa.project.entity.hb.Tagtype"
+                 select="com.oa.project.dao.hb.TagtypeMapper.selectByPrimaryKey"></association>
+  </resultMap>
+  <sql id="Base_Column_List">
+    tag_id, tag_name,tagtype_id
+  </sql>
+  <insert id="insertSelective" parameterType="com.oa.project.entity.hb.Custag">
+    insert into cus_tag
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="tagId != null">
+        tag_id,
+      </if>
+      <if test="tagName != null">
+        tag_name,
+      </if>
+      <if test="tagtype != null and tagtype.tagtypeId != null">
+        tagtype_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="tagId != null">
+        #{tagId,jdbcType=INTEGER},
+      </if>
+      <if test="tagName != null">
+        #{tagName,jdbcType=VARCHAR},
+      </if>
+      <if test="tagtype != null and tagtype.tagtypeId != null">
+        #{tagtype.tagtypeId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.oa.project.entity.hb.Custag">
+    update cus_tag
+    <set>
+      <if test="tagName != null">
+        tag_name = #{tagName,jdbcType=VARCHAR},
+      </if>
+      <if test="tagtype != null and tagtype.tagtypeId != null">
+        tagtype_id = #{tagtype.tagtypeId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where tag_id = #{tagId,jdbcType=INTEGER}
+  </update>
+</mapper>

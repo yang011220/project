@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oa.project.dao.lh.VisitHistoryDao">
+  <resultMap type="com.oa.project.entity.lh.VisitHistory" id="VisitHistoryResultMap">
+  	<id column="vh_id" jdbcType="INTEGER" property="vhId"/>
+  	<result column="visit_time" jdbcType="TIMESTAMP" property="visitTime"/>
+  	<result column="visit_record" jdbcType="LONGVARCHAR" property="visitRecord"/>
+  	<result column="visit_reason" jdbcType="LONGVARCHAR" property="visitReason"/>
+  	<result column="visit_place" jdbcType="VARCHAR" property="visitPlace"/>
+  	<association  property="emp" column="emp_id" javaType="com.oa.project.entity.lh.Emp"
+  	select="com.oa.project.dao.lh.EmpDao.findById" fetchType="lazy">
+  	</association>
+  	<association  property="cust" column="cus_id" javaType="com.oa.project.entity.hb.Customer"
+  	select="com.oa.project.dao.hb.CustomerMapper.selectByPrimaryKey" fetchType="lazy">
+  	</association>
+  </resultMap>
+  <insert id="save" parameterType="com.oa.project.entity.lh.VisitHistory">
+    insert into visit_history
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="vhId != null">
+        vh_id,
+      </if>
+      <if test="emp != null and emp.empId != null">
+        emp_id,
+      </if>
+      <if test="cust != null and cust.cusId != null">
+        cus_id,
+      </if>
+      <if test="visitTime != null">
+        visit_time,
+      </if>
+      <if test="visitPlace != null">
+        visit_place,
+      </if>
+      <if test="visitRecord != null">
+        visit_record,
+      </if>
+      <if test="visitReason != null">
+        visit_reason,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="vhId != null">
+        #{vhId,jdbcType=INTEGER},
+      </if>
+      <if test="emp != null and emp.empId != null">
+        #{emp.empId,jdbcType=INTEGER},
+      </if>
+      <if test="cust != null and cust.cusId != null">
+        #{cust.cusId,jdbcType=INTEGER},
+      </if>
+      <if test="visitTime != null">
+        #{visitTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="visitPlace != null">
+        #{visitPlace,jdbcType=VARCHAR},
+      </if>
+      <if test="visitRecord != null">
+        #{visitRecord,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="visitReason != null">
+        #{visitReason,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="update" parameterType="com.oa.project.entity.lh.VisitHistory">
+    update visit_history
+    <set>
+      <if test="emp != null and emp.empId != null">
+        emp_id = #{emp.empId,jdbcType=INTEGER},
+      </if>
+      <if test="cust != null and cust.cusId != null">
+        cus_id = #{cust.cusId,jdbcType=INTEGER},
+      </if>
+      <if test="visitTime != null">
+        visit_time = #{visitTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="visitPlace != null">
+        visit_place = #{visitPlace,jdbcType=VARCHAR},
+      </if>
+      <if test="visitRecord != null">
+        visit_record = #{visitRecord,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="visitReason != null">
+        visit_reason = #{visitReason,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where vh_id = #{vhId,jdbcType=INTEGER}
+  </update>
+</mapper>

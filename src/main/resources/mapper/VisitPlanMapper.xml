@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oa.project.dao.lh.VisitPlanDao">
+<resultMap id="VisitPlanResultMap" type="com.oa.project.entity.lh.VisitPlan" >
+	<id column="visit_id" jdbcType="INTEGER" property="visitId"/>
+	<result column="plan" jdbcType="VARCHAR" property="plan"/>
+	<result column="visit_time" jdbcType="TIMESTAMP" property="visitTime"/>
+	<result column="plan" jdbcType="LONGVARCHAR" property="plan"/>
+	<result column="reason" jdbcType="LONGVARCHAR" property="reason"/>
+	<association property="emp" column="emp_id" javaType="com.oa.project.entity.lh.Emp"
+	select="com.oa.project.dao.lh.EmpDao.findById" fetchType="lazy">
+	</association>
+	<association property="cust" column="cus_id" javaType="com.oa.project.entity.hb.Customer"
+	select="com.oa.project.dao.hb.CustomerMapper.selectByPrimaryKey" fetchType="lazy">
+	</association>
+</resultMap>
+  <insert id="save" parameterType="com.oa.project.entity.lh.VisitPlan">
+    insert into visit_plan
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="visitId != null">
+        visit_id,
+      </if>
+      <if test="emp != null and emp.empId != null">
+        emp_id,
+      </if>
+      <if test="cust != null and cust.cusId != null">
+        cus_id,
+      </if>
+      <if test="visitTime != null">
+        visit_time,
+      </if>
+      <if test="plan != null">
+        plan,
+      </if>
+      <if test="reason != null">
+        reason,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="visitId != null">
+        #{visitId,jdbcType=INTEGER},
+      </if>
+      <if test="emp != null and emp.empId != null">
+        #{emp.empId,jdbcType=INTEGER},
+      </if>
+      <if test="cust != null and cust.cusId != null">
+        #{cust.cusId,jdbcType=INTEGER},
+      </if>
+      <if test="visitTime != null">
+        #{visitTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="plan != null">
+        #{plan,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="reason != null">
+        #{reason,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateById" parameterType="com.oa.project.entity.lh.VisitPlan">
+    update visit_plan
+    <set>
+      <if test="emp != null and emp.empId != null">
+        emp_id = #{emp.empId,jdbcType=INTEGER},
+      </if>
+      <if test="cust != null and cust.cusId != null">
+        cus_id = #{cust.cusId,jdbcType=INTEGER},
+      </if>
+      <if test="visitTime != null">
+        visit_time = #{visitTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="plan != null">
+        plan = #{plan,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="reason != null">
+        reason = #{reason,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where visit_id = #{visitId,jdbcType=INTEGER}
+  </update>
+</mapper>
